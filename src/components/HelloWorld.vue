@@ -1,58 +1,58 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-  </div>
+  <v-container>
+    <v-layout text-center wrap>
+      <v-flex xs12>
+        <v-img src="https://via.placeholder.com/1600x900" class="my-3" contain height="400"></v-img>
+      </v-flex>
+
+      <v-flex xs12 mb-5>
+        <h1 class="display-2 font-weight-bold mt-12">Neues Foto</h1>
+
+        <v-layout justify-center>
+          <v-btn @click="startTimer()" class="mx-2 mt-12" fab dark x-large color="green">
+            <v-icon dark>mdi-plus</v-icon>
+          </v-btn>
+        </v-layout>
+      </v-flex>
+    </v-layout>
+    <v-overlay :value="overlay">
+      <div id="time">{{time}}</div>
+    </v-overlay>
+  </v-container>
 </template>
 
 <script>
 export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
+  name: "HelloWorld",
+  data() {
+    return {
+      overlay: false,
+      time: 5
+    };
+  },
+  methods: {
+    startTimer: function() {
+      this.overlay= true;
+      if (this.time > 0) {
+        setTimeout(() => {
+          this.time -= 1;
+          this.startTimer();
+        }, 1000);
+      } else {
+        this.overlay = false;
+        this.time = 5;
+      }
+    }
   }
-}
+};
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+#time {
+  font-size: 200px;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.v-btn {
+  height: 150px !important;
+  width: 150px !important;
 }
 </style>
