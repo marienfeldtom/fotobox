@@ -1,9 +1,12 @@
 <template>
+<div>
+  <loading :active.sync="isLoading" 
+        :can-cancel="true" 
+        :on-cancel="onCancel"
+        :is-full-page="fullPage"></loading>
   <v-container>
     <v-layout text-center wrap>
-      <v-flex xs12>
-        <v-img src="https://via.placeholder.com/1600x900" class="my-3" contain height="400"></v-img>
-      </v-flex>
+      <ImageAnzeige />
 
       <v-flex xs12 mb-5>
         <h1 class="display-2 font-weight-bold mt-12">Neues Foto</h1>
@@ -19,20 +22,39 @@
       <div id="time">{{time}}</div>
     </v-overlay>
   </v-container>
+  </div>
 </template>
 
 <script>
+import ImageAnzeige from "./Image";
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
+const axios = require("axios");
+
 export default {
+  components: {
+    ImageAnzeige, Loading
+  },
+
   name: "HelloWorld",
   data() {
     return {
       overlay: false,
-      time: 5
+      time: 5,
+       isLoading: false,
+       fullPage: true
     };
   },
   methods: {
     startTimer: function() {
-      this.overlay= true;
+      this.overlay = true;
+      if (this.time == 1) {
+        // Make a request for a user with a given ID
+        this.isLoading = true;
+        axios.get("http://192.168.178.44:3000/").finally(function() {
+          this.isLoading = false;
+        });
+      }
       if (this.time > 0) {
         setTimeout(() => {
           this.time -= 1;

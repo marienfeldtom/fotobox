@@ -23,7 +23,6 @@
 
       
     </v-app-bar>
-
     <v-content>
       <HelloWorld/>
     </v-content>
@@ -32,16 +31,14 @@
 
 <script>
 import HelloWorld from './components/HelloWorld';
-
 export default {
   name: 'App',
 
   components: {
-    HelloWorld,
-  },
+    HelloWorld, 
+      },
 
   data: () => ({
-    //
   }),
 };
 </script>
